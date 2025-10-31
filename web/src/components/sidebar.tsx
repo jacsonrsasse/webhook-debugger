@@ -1,0 +1,19 @@
+export function Sidebar() {
+  return (
+    <div className="flex h-screen flex-col">
+      <div className="flex items-center justify-between border-b border-zinc-700 px-4 py-5">
+        <div className="flex items-baseline">
+          <span className="font-semibold text-zinc-100">Webhook</span>
+          <span className="font-normal text-zinc-400">. debugger</span>
+          <span></span>
+        </div>
+      </div>
+
+      <div className="flex items-center justify-between border-b border-zinc-700 bg-zinc-600 px-4 py-2.5">
+        <div className="flex-1 min-w-0 flex items-center gap-1 text-xs font-mono text-zinc-300">
+          <span className="truncate">https://qualquercoisa.com</span>
+        </div>
+      </div>
+    </div>
+  );
+}
