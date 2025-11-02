@@ -3,6 +3,7 @@ import { Panel, PanelGroup, PanelResizeHandle } from "react-resizable-panels";
 import { Sidebar } from "../components/sidebar";
 import { WebhookDetailHeader } from "../components/webhook-detail-header";
 import { SectionTitle } from "../components/section-title";
+import { SectionDataTable } from "../components/section-data-table";
 
 export const Route = createFileRoute("/")({
   component: Index,
@@ -45,6 +46,7 @@ function Index() {
               <div className="space-y-6 p-6">
                 <div className="space-y-4">
                   <SectionTitle>Request Overview</SectionTitle>
+                  <SectionDataTable data={overviewData} />
                 </div>
 
                 <div></div>
