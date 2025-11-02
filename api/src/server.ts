@@ -11,6 +11,7 @@ import ScalarApiReference from "@scalar/fastify-api-reference";
 import { listWebhooks } from "./routes/list-webhooks";
 import { env } from "./env";
 import { getWebhook } from "./routes/get-webhook";
+import { deleteWebhook } from "./routes/delete-webhook";
 
 const app = fastify();
 
@@ -40,6 +41,7 @@ app.register(ScalarApiReference, {
 
 app.register(listWebhooks);
 app.register(getWebhook);
+app.register(deleteWebhook);
 
 app.listen({ port: env.PORT, host: "0.0.0.0" }, () => {
   console.log("Http server running at http://localhost:3333");
