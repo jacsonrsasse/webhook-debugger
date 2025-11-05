@@ -9,7 +9,9 @@ function Index() {
     <div className="flex h-full items-center justify-center">
       <div className="flex flex-col items-center justify-center gap-4 p-8 text-center">
         <h3 className="text-lg font-semibold">No webhooks selected</h3>
-        <p>Select a webhook from the list to see the details</p>
+        <p className="text-sm max-w-md text-zinc-400">
+          Select a webhook from the list to see the details
+        </p>
       </div>
     </div>
   );

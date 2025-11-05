@@ -3,28 +3,41 @@ import { WebhookDetailHeader } from "../components/webhook-detail-header";
 import { SectionTitle } from "../components/section-title";
 import { SectionDataTable } from "../components/section-data-table";
 import { CodeBlock } from "../components/ui/code-block";
+import { useSuspenseQuery } from "@tanstack/react-query";
+import { webhookDetailsSchema } from "../http/schemas/webhooks";
 
 export const Route = createFileRoute("/webhooks/$id")({
   component: RouteComponent,
 });
 
 function RouteComponent() {
+  const { id } = Route.useParams();
+
+  const { data } = useSuspenseQuery({
+    queryKey: ["webhooks", id],
+    queryFn: async () => {
+      const response = await fetch(`http://localhost:3333/api/webhooks/${id}`);
+      const data = await response.json();
+      return webhookDetailsSchema.parse(data);
+    },
+  });
+
   const overviewData = [
     {
       key: "Method",
-      value: "POST",
+      value: data.method,
     },
     {
       key: "Status Code",
-      value: "200",
+      value: data.statusCode.toString(),
     },
     {
       key: "Content-type",
-      value: "application/json",
+      value: data.contentType ?? "application/json",
     },
     {
       key: "Content-length",
-      value: "28794 bytes",
+      value: `${data.contentLength ?? 0} bytes`,
     },
   ];
 
