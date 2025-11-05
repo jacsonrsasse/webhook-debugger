@@ -1,12 +1,14 @@
 import { useSuspenseInfiniteQuery } from "@tanstack/react-query";
 import { WebhookListItem } from "./webhook-list-item";
 import { webhookListSchema } from "../http/schemas/webhooks";
-import { Loader2 } from "lucide-react";
-import { useEffect, useRef } from "react";
+import { Loader2, Wand2 } from "lucide-react";
+import { useEffect, useRef, useState } from "react";
 
 export function WebhookList() {
   const loadMoreRef = useRef<HTMLDivElement>(null);
   const intersectionRef = useRef<IntersectionObserver>(null);
+
+  const [checkedWebhooksIds, setCheckedWebhooksIds] = useState<string[]>([]);
 
   const { data, hasNextPage, fetchNextPage, isFetchingNextPage } =
     useSuspenseInfiniteQuery({
@@ -53,11 +55,36 @@ export function WebhookList() {
     };
   }, [hasNextPage, isFetchingNextPage, fetchNextPage]);
 
+  function handleWebhookChecked(id: string) {
+    if (checkedWebhooksIds.includes(id)) {
+      setCheckedWebhooksIds((prev) => prev.filter((id) => id !== id));
+    } else {
+      setCheckedWebhooksIds((prev) => [...prev, id]);
+    }
+  }
+
+  const hasCheckedWebhooks = checkedWebhooksIds.length > 0;
+
   return (
     <div className="flex-1 overflow-y-auto">
+      <div className="top-3 right-3">
+        <button
+          disabled={!hasCheckedWebhooks}
+          className="bg-indigo-400 text-white rounded-lg w-full flex items-center justify-center gap-3 font-medium text-sm py-2.5 disabled:opacity-50"
+        >
+          <Wand2 className="size-4" />
+          Gerar Handler
+        </button>
+      </div>
+
       <div className="space-y-4 p-2">
         {webhooks.map((item) => (
-          <WebhookListItem key={item.id} webhook={item} />
+          <WebhookListItem
+            key={item.id}
+            webhook={item}
+            isWebhookChecked={checkedWebhooksIds.includes(item.id)}
+            onWebhookChecked={handleWebhookChecked}
+          />
         ))}
       </div>
 
