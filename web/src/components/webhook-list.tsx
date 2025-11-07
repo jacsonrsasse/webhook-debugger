@@ -55,29 +55,32 @@ export function WebhookList() {
     };
   }, [hasNextPage, isFetchingNextPage, fetchNextPage]);
 
-  function handleWebhookChecked(id: string) {
-    if (checkedWebhooksIds.includes(id)) {
-      setCheckedWebhooksIds((prev) => prev.filter((id) => id !== id));
+  function handleWebhookChecked(checkedId: string) {
+    if (checkedWebhooksIds.includes(checkedId)) {
+      setCheckedWebhooksIds((prev) => prev.filter((id) => id !== checkedId));
     } else {
-      setCheckedWebhooksIds((prev) => [...prev, id]);
+      setCheckedWebhooksIds((prev) => [...prev, checkedId]);
     }
+  }
+
+  function handleGenerateHandler() {
+    console.log(checkedWebhooksIds);
   }
 
   const hasCheckedWebhooks = checkedWebhooksIds.length > 0;
 
   return (
     <div className="flex-1 overflow-y-auto">
-      <div className="top-3 right-3">
+      <div className="space-y-1 p-2">
         <button
           disabled={!hasCheckedWebhooks}
-          className="bg-indigo-400 text-white rounded-lg w-full flex items-center justify-center gap-3 font-medium text-sm py-2.5 disabled:opacity-50"
+          className="bg-indigo-400 mb-3 text-white rounded-lg w-full flex items-center justify-center gap-3 font-medium text-sm py-2.5 disabled:opacity-50"
+          onClick={() => handleGenerateHandler()}
         >
           <Wand2 className="size-4" />
           Gerar Handler
         </button>
-      </div>
 
-      <div className="space-y-4 p-2">
         {webhooks.map((item) => (
           <WebhookListItem
             key={item.id}
